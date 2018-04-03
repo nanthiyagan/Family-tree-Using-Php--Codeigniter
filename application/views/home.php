@@ -11,7 +11,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<?php endif;?>
 	<div class="clearfix well">
 		<a class="btn btn-info pull-right" href="<?php echo site_url('home/create'); ?>">Add New Record</a>
+        <a class="btn btn-info pull-left" href="<?php echo site_url('home/about'); ?>">View Tree</a>
 	</div>
+
     <?php if(is_array($data) && count($data) > 0){ ?>
 	<table class="table table-bordered table-hover" cellspacing="0" width="100%" id="employee">
 		<thead>

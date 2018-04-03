@@ -56,3 +56,4 @@ $route['home/about'] = 'home/about';
 $route['home/profile/(:any)'] = 'home/profile/$1';
 $route['home/edit/(:any)'] = 'home/edit/$1';
 $route['home/create'] = 'home/create';
+$route['home/generateimage'] = 'home/generateimage';

@@ -28,12 +28,13 @@
     </style>
 </head>
 <body>
-
 <div class="chart" id="basic-example"></div>
 <script src="http://fperucic.github.io/treant-js/vendor/raphael.js"></script>
 <script src="http://fperucic.github.io/treant-js/Treant.js"></script>
-
 <script src="http://fperucic.github.io/treant-js/examples/basic-example/basic-example.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
+
+<input type="button" id="save" value="Save PNG"/>
 <script type="text/javascript">
     var config = {
         container: "#basic-example",
@@ -63,19 +64,40 @@
         };
   <?php  } ?>
     <?php  }   ?>
-    var  chart_config = [];
+      var  chart_config = [];
       chart_config.push(config);
-<?php foreach ($contents as $key=>$value) { ?>
-     chart_config.push(node<?php echo $value->id; ?>)
-<?php  } ?>
-
+        <?php foreach ($contents as $key=>$value) { ?>
+             chart_config.push(node<?php echo $value->id; ?>)
+        <?php  } ?>
     new Treant( chart_config );
-
     setTimeout(function(){
         $("path").attr("stroke", "#ffffff")
     }, 5000);
 
 
+    $("#save").click(function() {
+        var base_url="<?php echo base_url(); ?>";
+        var canvas = document.getElementById('basic-example');
+        domtoimage.toPng(canvas)
+            .then(function (dataUrl) {
+                //Get transfer certificate form values
+                var dataUrl="data="+dataUrl;
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "home/generateimage",
+                    data: dataUrl,
+                    cache:false,
+                    success:
+                        function(data){
+                          alert("success");return false;
+                        }
+                });// you have missed this bracket
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+
+    });
 </script>
 </body>
 </html>

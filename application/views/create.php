@@ -39,7 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<label class="col-sm-3 control-label no-padding-right" for="form-field-3"> Contact No </label>
 
 		<div class="col-sm-9">
-			<input type="number" id="form-field-3" placeholder="Contact No" class="col-xs-10 col-sm-5" max-length="10" name="contact_no" value="<?php echo set_value('contact_no'); ?>">
+			<input type="text" id="form-field-3" placeholder="Contact No" class="col-xs-10 col-sm-5" max-length="10" name="contact_no" value="<?php echo set_value('contact_no'); ?>">
 		</div>
 	</div>
     <div class="form-group">
@@ -61,7 +61,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <label class="col-sm-3 control-label no-padding-right" for="form-field-2"> Alternate Mobile Number </label>
 
         <div class="col-sm-9">
-            <input type="number" id="form-field-6" placeholder="Alternate mobile No" class="col-xs-10 col-sm-5" max-length="10" name="alt_contact_no" value="<?php echo set_value('alt_contact_no'); ?>">
+            <input type="text" id="form-field-6" placeholder="Alternate mobile No" class="col-xs-10 col-sm-5" max-length="10" name="alt_contact_no" value="<?php echo set_value('alt_contact_no'); ?>">
         </div>
     </div>
 

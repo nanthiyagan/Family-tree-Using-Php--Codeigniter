@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+  include APPPATH.'third_party/Wkhtmltopdf.php';
 class Home extends CI_Controller {
 
 	/**
@@ -82,7 +82,9 @@ class Home extends CI_Controller {
         $data['sele_val']=$this->familytree->getAll();
 		$this->load->helper('form');
         $this->load->library('form_validation');
-		$this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('contact_no', 'Contact No', 'numeric|xss_clean');
+        $this->form_validation->set_rules('alt_contact_no', 'Aternate Contact No', 'numeric|xss_clean');
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 		
         if ($this->form_validation->run() === FALSE)
@@ -109,15 +111,30 @@ class Home extends CI_Controller {
         $data=$query->result();
         $i=0;
         $cleanarray = array();
-
         foreach ($data as $innerphrase) {
                     $cleanarray[$i] = $innerphrase;
                     $i++;
         }
-
         $array2 =  array();  // create a new array
         $array2['contents']= $cleanarray; // add $cleanarray to the new array
         $this->load->view('about', $array2);
+    }
+    public function generateimage()
+    {
+        /*try {
+            $wkhtmltopdf = new Wkhtmltopdf(array('path' =>'./uploads/'));
+            $wkhtmltopdf->setTitle("Title");
+            $wkhtmltopdf->setHtml("new test");
+            $wkhtmltopdf->output(Wkhtmltopdf::MODE_DOWNLOAD, "file.png");
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }*/
+        $img = $_POST['data']; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        file_put_contents('./uploads/'.time().'.png', $data);
+        echo 1;
     }
 	public function create()
 	{
@@ -128,6 +145,8 @@ class Home extends CI_Controller {
 		$this->load->helper('form');
         $this->load->library('form_validation');
 		$this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('contact_no', 'Contact No', 'numeric|xss_clean');
+        $this->form_validation->set_rules('alt_contact_no', 'Aternate Contact No', 'numeric|xss_clean');
 		$this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
 		
         if ($this->form_validation->run() === FALSE)
@@ -157,7 +176,8 @@ class Home extends CI_Controller {
 		
 		
 	}
-	public function delete($id)
+
+    public function delete($id)
     {
         $id = $this->uri->segment(3);
         
